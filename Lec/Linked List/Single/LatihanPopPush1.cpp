@@ -11,11 +11,10 @@ void push_ultimate(int input){
     current->data = input;
     if (!head){
         head=tail=current;
-    }
-    if (head->data < input){
+    } else if (head->data > input){
         current->next = head;
         head = current;
-    } else if(tail->data > input){
+    } else if(tail->data < input){
         tail->next = current;
         tail = current;
     } else {

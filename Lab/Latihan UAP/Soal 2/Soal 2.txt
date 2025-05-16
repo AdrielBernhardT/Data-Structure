@@ -1,0 +1,91 @@
+# Medicine Management
+
+Write a C program that manages medicine inventory using an AVL tree. The program should provide a menu with four options:
+
+1. Insert medicine  
+2. View medicines  
+3. Delete medicine  
+4. Exit  
+
+*Data Structure Requirements:*  
+- Use an AVL tree with *medicine names* as keys (case-sensitive)  
+- Each node must store:  
+  - Name (string, unique identifier)  
+  - Price (positive float)  
+  - Quantity (non-negative integer)  
+
+---
+
+### Program Requirements
+
+#### 1. Insert Medicine  
+- Prompt for:  
+  - *Name*: Non-empty string, must not exist in the tree  
+  - *Price*: Positive number (> 0)  
+  - *Quantity*: Integer ≥ 0  
+- Validate each field individually. On invalid input:  
+  - Show specific error (e.g., "Invalid price!" or "Name already exists!")  
+  - Re-prompt until valid  
+- After successful insertion:  
+  - Display: [MedicineX] added (Price: $Y, Qty: Z)  
+
+#### 2. View Medicines  
+- Display all medicines using *pre-order traversal*  
+- Format:  
+  
+  Medicines:
+  1. [Paracetamol] $0.50 (Qty: 100)
+  2. [Amoxicillin] $2.75 (Qty: 30)
+  
+- If empty: No medicines in inventory  
+
+#### 3. Delete Medicine  
+- Prompt for *name*  
+- Validate:  
+  - Non-empty string  
+  - Must exist in the tree  
+- On success: [MedicineX] deleted  
+- On failure: Medicine not found!  
+
+#### 4. Exit  
+- Terminate with message: Goodbye!  
+
+---
+
+### Input Validation Rules  
+| Field    | Valid Input          | Error Message               |  
+|----------|----------------------|-----------------------------|  
+| Name     | Non-empty, unique    | "Invalid/duplicate name!"   |  
+| Price    | Float > 0            | "Price must be > $0!"       |  
+| Quantity | Integer ≥ 0          | "Quantity must be ≥ 0!"    |  
+
+---
+
+### Example Interaction  
+
+Menu:
+1. Insert medicine
+2. View medicines
+3. Delete medicine
+4. Exit
+
+Choice: 1
+Enter name: Aspirin
+Enter price: -5
+Price must be > $0!
+Enter price: 4.99
+Enter quantity: ten
+Quantity must be ≥ 0!
+Enter quantity: 50  
+[Aspirin] added (Price: $4.99, Qty: 50)
+
+
+*Implementation Notes:*  
+- Implement full AVL balancing after insert/delete  
+- Use case-sensitive string comparison for names  
+- Maintain menu loop until exit  
+- Display user-friendly formatting Guys, ku dpt update ktnya untuk uas jadinya gini yaa
+
+Materi UAP DS PPTI
+- AVL (Insert, View, Delete) 
+- Logical AVL (Total Node, Height of new node, dst)

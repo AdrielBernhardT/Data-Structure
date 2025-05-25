@@ -96,18 +96,6 @@ int main(){
         if(choice == 1){
             View();
         } else if(choice == 2){
-            char name[50];
-            // long price;
-            // char cat[15];
-            // char avail[15];
-
-            printf("INSERT NEW TREATMENT\n");
-            do {
-                printf("input new treatment name: ");
-                scanf("%[^\n]", name); getchar();
-            } while(!nameVal(name));
-
-            curr = Insert(curr, )
             
         } else if(choice == 3){
             

@@ -224,91 +224,91 @@ node* Insert(node* root){
 
 
 // ================= DELETE REQUIREMENT =====================
-node* treeChecker(node* root, char* target){
-    if(!root){
-        return NULL;
-    } else if(strcmp(root->name,target) == 0){
-        return root;
-    } else if(strcmp(root->name, target) < 1){
-        return treeChecker(root->left,target);
-    } else{
-        return treeChecker(root->right, target);
-    }
-}
-
 node* deleteAVL(node* root, char* target){
-    if(!root){
+    if (!root) {
+        // Node tidak ditemukan, langsung return NULL
         return NULL;
-    } else if(strcmp(target,root->name) < 0){
+    }
+
+    if (strcmp(target, root->name) < 0) {
         root->left = deleteAVL(root->left, target);
-    } else if(strcmp(target,root->name) > 0){
+    } else if (strcmp(target, root->name) > 0) {
         root->right = deleteAVL(root->right, target);
-    } else{
-        if(root->left == NULL && root->right == NULL){
+    } else {
+        // Ketemu node yang akan dihapus
+
+        if (!root->left && !root->right) {
             free(root);
             return NULL;
-        } else if(root->left == NULL || root->right == NULL){
-            node* temp = root->left? root->left:root->right;
+        }
+        if (!root->left || !root->right) {
+            node* temp = root->left ? root->left : root->right;
             free(root);
             return temp;
-        } else {
-            node* temp = root->left;
-            while (temp->right){
-                temp = temp->right;
-            }
-            
-            strcpy(root->name, temp->name);
-            root->price = temp->price;
-            strcpy(root->cat,temp->cat);
-            strcpy(root->avail, temp->avail);
+        }
 
-            root->left = deleteAVL(root->left, temp->name);
+        // Dua anak: cari predecessor (max di subtree kiri)
+        node* temp = root->left;
+        while (temp->right) temp = temp->right;
+
+        // Copy data predecessor ke root
+        strcpy(root->name, temp->name);
+        root->price = temp->price;
+        strcpy(root->cat, temp->cat);
+        strcpy(root->avail, temp->avail);
+
+        // Hapus predecessor di subtree kiri
+        root->left = deleteAVL(root->left, temp->name);
+    }
+
+    // Update height
+    root->height = max(height(root->left), height(root->right)) + 1;
+
+    // Balancing
+    int balance = getBalance(root);
+
+    if (balance > 1) {
+        if (getBalance(root->left) >= 0) {
+            return rightRotate(root);
+        } else {
+            root->left = leftRotate(root->left);
+            return rightRotate(root);
+        }
+    }
+    if (balance < -1) {
+        if (getBalance(root->right) <= 0) {
+            return leftRotate(root);
+        } else {
+            root->right = rightRotate(root->right);
+            return leftRotate(root);
         }
     }
 
-    // Balanching
-    root->height =  max(height(root->left), height(root->right)) + 1; 
-	int balance = getBalance(root); 
-	
-	if(balance > 1){
-		if(getBalance(root->left) >= 0){
-			return rightRotate(root); 
-		} else{
-			root->left = leftRotate(root->left);
-			return rightRotate(root); 
-		}
-	}
-	if(balance < -1){
-		if(getBalance(root->right) <= 0){
-			return leftRotate(root);
-		} else{
-			root->right = rightRotate(root->right);
-			return leftRotate(root); 
-		}
-	}
-	return root; 
+    return root;
 }
 
 node* Delete(node* root){
-    if(!root){
-        printf("no data\n");
+    if (!root) {
+        printf("No data.\n");
         gc;
         return root;
     }
 
     char target[101];
     printf("DELETE TREATMENT\n");
-    printf("insert name to be deleted: ");
+    printf("Insert name to delete: ");
     scanf("%[^\n]", target); gc;
 
-    if(treeChecker(root, target)){
-        root = deleteAVL(root,target);
-        printf("[Data successfully deleted]");
-    } else{
-        printf("Data does not exist!\n");
+    node* newRoot = deleteAVL(root, target);
+
+    if (newRoot == root) {
+        // root sama berarti tidak ada perubahan (data tidak ditemukan)
+        printf("Data not found!\n");
+    } else {
+        printf("[Data successfully deleted]\n");
     }
 
-    return root;
+    return newRoot;
 }
 
 // =============== END DELETE REQUIREMENT ===================
@@ -332,7 +332,7 @@ int main(){
         if(choice == 1){
             View(curr);
         } else if(choice == 2){
-            Insert(curr);
+            curr = Insert(curr);
             printf("[New Treatment is Successfully Inserted]\n"); 
             gc;
         } else if(choice == 3){

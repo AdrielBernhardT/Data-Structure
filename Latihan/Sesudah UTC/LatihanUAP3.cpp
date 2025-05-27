@@ -336,7 +336,7 @@ int main(){
             printf("[New Treatment is Successfully Inserted]\n"); 
             gc;
         } else if(choice == 3){
-            Delete(curr);
+            curr = Delete(curr);
         }        
     } while (choice != 4);
     return 0;

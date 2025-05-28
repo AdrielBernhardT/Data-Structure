@@ -257,7 +257,7 @@ node* Delete(){
     scanf("%[^\n]", target); getchar();
     
     node *newRoot = deleteAVL(headRoot, target);
-     if (newRoot == headRoot) {
+    if (newRoot == headRoot) {
         printf("Data not found!\n");
     } else {
         printf("[Data successfully deleted]\n");

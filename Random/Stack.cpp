@@ -11,17 +11,14 @@ void init(Stack *s) {
     s->top = -1;
 }
 
-// Cek apakah stack kosong
 int isEmpty(Stack *s) {
     return s->top == -1;
 }
 
-// Cek apakah stack penuh
 int isFull(Stack *s) {
     return s->top == MAX - 1;
 }
 
-// Menambahkan elemen ke stack
 void push(Stack *s, int value) {
     if (isFull(s)) {
         printf("Stack overflow!\n");
@@ -30,7 +27,6 @@ void push(Stack *s, int value) {
     }
 }
 
-// Menghapus elemen dari stack
 int pop(Stack *s) {
     if (isEmpty(s)) {
         printf("Stack underflow!\n");
@@ -40,7 +36,6 @@ int pop(Stack *s) {
     }
 }
 
-// Melihat elemen di puncak stack
 int peek(Stack *s) {
     if (isEmpty(s)) {
         printf("Stack is empty!\n");
@@ -50,7 +45,6 @@ int peek(Stack *s) {
     }
 }
 
-// Contoh penggunaan
 int main() {
     Stack s;
     init(&s);
@@ -59,7 +53,10 @@ int main() {
     push(&s, 20);
     printf("Top: %d\n", peek(&s)); // Output: 20
     printf("Popped: %d\n", pop(&s)); // Output: 20
+
+    printf("Top: %d\n", peek(&s)); // Output: 10
     printf("Popped: %d\n", pop(&s)); // Output: 10
+
     printf("Popped: %d\n", pop(&s)); // Output: Stack underflow!
 
     return 0;
